@@ -75,29 +75,27 @@ public class BriscolaRules {
 
 
 	@Test public void testPresaDiBriscola() {
-		Mano ta = new Mano(Seme.ORO);
 		assertTrue(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.BASTONI, Valore.ASSO),
 						new ItalianCard(Seme.ORO, Valore.DUE))
 				);
 		assertFalse(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.ORO, Valore.ASSO),
 						new ItalianCard(Seme.BASTONI, Valore.DUE))
 				);
 	}
 
 	@Test public void testBriscolaPiuAlta() {
-		Mano ta = new Mano(Seme.ORO);
 		assertFalse(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.ORO, Valore.ASSO),
 						new ItalianCard(Seme.ORO, Valore.RE)
 						)
 				);
 		assertTrue(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.ORO, Valore.RE),
 						new ItalianCard(Seme.ORO, Valore.ASSO)
 						)
@@ -106,15 +104,14 @@ public class BriscolaRules {
 
 
 	@Test public void testCartaPiuAlta() {
-		Mano ta = new Mano(Seme.ORO);
 		assertFalse(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.BASTONI, Valore.ASSO),
 						new ItalianCard(Seme.BASTONI, Valore.RE)
 						)
 				);
 		assertTrue(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.BASTONI, Valore.RE),
 						new ItalianCard(Seme.BASTONI, Valore.ASSO)
 						)
@@ -122,9 +119,8 @@ public class BriscolaRules {
 	}
 
 	@Test public void testNonRispondeAlSeme() {
-		Mano ta = new Mano(Seme.ORO);
 		assertFalse(
-				ta.laSecondaVince(
+				mano.laSecondaVince(
 						new ItalianCard(Seme.BASTONI, Valore.DUE),
 						new ItalianCard(Seme.COPPE, Valore.RE)
 						)
