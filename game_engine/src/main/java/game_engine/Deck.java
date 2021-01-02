@@ -2,6 +2,7 @@ package game_engine;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +17,10 @@ public class Deck<T extends Card> extends BoardItem {
 
 	public void addCard(T card){
 		cards.add(card);
+	}
+
+	public void addCardToBack(T card){
+		cards.add(cards.size(),card);
 	}
 
 	public void shuffle() {
@@ -41,8 +46,11 @@ public class Deck<T extends Card> extends BoardItem {
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("[");
-		for (T t: cards) {
-			stringBuilder.append(t.toString()).append(" ");
+		for (Iterator<T> iterator = cards.iterator(); iterator.hasNext();) {
+			T t = iterator.next();
+			stringBuilder.append(t.toString());
+			if(iterator.hasNext())
+				stringBuilder.append(", ");
 		}
 		stringBuilder.append("]");
 		return stringBuilder.toString();
