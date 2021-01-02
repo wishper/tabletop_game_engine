@@ -69,10 +69,9 @@ public class BriscolaSetup {
 		BriscolaEngine briscolaEngine4 = new BriscolaEngine(4);
 		briscolaEngine4.prepareGame();
 		briscolaEngine4.startGame();
-		assertEquals(40-1-4*3, briscolaEngine4.getDeck().getCards().size());
+		assertEquals(40-4*3, briscolaEngine4.getDeck().getCards().size());
 		for (CardPlayer<ItalianCard> player: briscolaEngine4.getPlayers()) {
 			assertEquals(3, player.getHand().getCards().size());
-			System.out.println(player.getHand());
 		}
 	}
 
