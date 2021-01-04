@@ -18,4 +18,9 @@ public class DefaultCardPlayer<T extends Card> implements CardPlayer<T> {
 		}
 	}
 
+	@Override
+	public void askForMove(Object pContext) {
+		// TODO Auto-generated method stub
+	}
+
 }

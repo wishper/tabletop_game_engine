@@ -11,12 +11,27 @@ import java.util.Random;
 import org.junit.Test;
 
 public class BriscolaGame {
+	private static final class AlwaysPlayFirstCardPlayer extends TestPlayer<ItalianCard> {
+		private AlwaysPlayFirstCardPlayer(String pName) {
+			super(pName);
+		}
+
+		@Override
+		public void askForMove(Object pContext) {
+			if (pContext instanceof Mano) {
+				Mano mano = (Mano) pContext;
+				mano.add(new AzioneDellaMano(AlwaysPlayFirstCardPlayer.this, getHand().drawCard()));
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAGame() throws Exception {
-		CardPlayer<ItalianCard> playerN = new TestPlayer<>("N");
-		CardPlayer<ItalianCard> playerE = new TestPlayer<>("E");
-		CardPlayer<ItalianCard> playerS = new TestPlayer<>("S");
-		CardPlayer<ItalianCard> playerW = new TestPlayer<>("W");
+		CardPlayer<ItalianCard> playerN = new AlwaysPlayFirstCardPlayer("N");
+		CardPlayer<ItalianCard> playerE = new AlwaysPlayFirstCardPlayer("E");
+		CardPlayer<ItalianCard> playerS = new AlwaysPlayFirstCardPlayer("S");
+		CardPlayer<ItalianCard> playerW = new AlwaysPlayFirstCardPlayer("W");
 		BriscolaEngine be = new BriscolaEngine(new Random(0), playerN, playerE, playerS, playerW);
 		be.prepareGame();
 		be.startGame();
@@ -29,9 +44,6 @@ public class BriscolaGame {
 
 		Mano mano = be.nuovaMano();
 		be.askPlayerForMove(firstPlayer, mano);
-
-		ItalianCard drawCard = firstPlayer.getHand().drawCard();
-		mano.add(new AzioneDellaMano(playerN, drawCard));
 		assertSame(playerE, be.getPlayerWeAreWaitingOn());
 	}
 }

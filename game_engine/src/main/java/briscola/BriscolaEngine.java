@@ -4,6 +4,7 @@ import game_engine.CardEngine;
 import game_engine.CardPlayer;
 import game_engine.Deck;
 import game_engine.GameEngine;
+import game_engine.Player;
 import game_engine.standard_cards.ItalianCard;
 import game_engine.standard_cards.ItalianCard.Seme;
 import java.util.Random;
@@ -11,6 +12,7 @@ import java.util.Random;
 public class BriscolaEngine extends CardEngine<ItalianCard> implements GameEngine {
 
 	private Seme briscola;
+	private CardPlayer<ItalianCard> currentPlayer;
 
 	public BriscolaEngine(int playerCount) {
 		super(playerCount);
@@ -18,6 +20,10 @@ public class BriscolaEngine extends CardEngine<ItalianCard> implements GameEngin
 
 	public BriscolaEngine(int playerCount, Random seed) {
 		super(playerCount, seed);
+	}
+
+	public BriscolaEngine(Random seed, CardPlayer<ItalianCard> ...giocatori) {
+		super(seed, giocatori);
 	}
 
 	@Override public void startGame() {
@@ -28,6 +34,7 @@ public class BriscolaEngine extends CardEngine<ItalianCard> implements GameEngin
 		for (CardPlayer<ItalianCard> giocatore : players) {
 			giocatore.addToHand(mazzo.drawCards(3));
 		}
+		mazzo.addCardToBack(cartaDiBriscola);
 	}
 
 	private void setBriscola(Seme briscola) {
@@ -70,5 +77,16 @@ public class BriscolaEngine extends CardEngine<ItalianCard> implements GameEngin
 		default:
 			return 0;
 		}
+	}
+
+	public CardPlayer<ItalianCard> getPlayerWeAreWaitingOn() {
+		return currentPlayer;
+	}
+
+	public void askPlayerForMove(CardPlayer<ItalianCard> giocatore, Mano mano) {
+		giocatore.askForMove(mano);
+		getBoard().getPlayTurn().nextTurn();
+		Player mPlayerAt = getBoard().getPlayerAt(getBoard().getPlayTurn().getCurrentLocation());
+		currentPlayer = (CardPlayer<ItalianCard>) mPlayerAt;
 	}
 }
